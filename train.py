@@ -42,13 +42,13 @@ def main():
     train_prefetcher, valid_prefetcher = load_dataset()
     print(f"Load `{config.model_arch_name}` datasets successfully.")
 
-    googlenet_model, ema_googlenet_model = build_model()
+    inception_v3_model, ema_inception_v3_model = build_model()
     print(f"Build `{config.model_arch_name}` model successfully.")
 
     pixel_criterion = define_loss()
     print("Define all loss functions successfully.")
 
-    optimizer = define_optimizer(googlenet_model)
+    optimizer = define_optimizer(inception_v3_model)
     print("Define all optimizer functions successfully.")
 
     scheduler = define_scheduler(optimizer)
@@ -56,10 +56,10 @@ def main():
 
     print("Check whether to load pretrained model weights...")
     if config.pretrained_model_weights_path:
-        googlenet_model, ema_googlenet_model, start_epoch, best_acc1, optimizer, scheduler = load_state_dict(
-            googlenet_model,
+        inception_v3_model, ema_inception_v3_model, start_epoch, best_acc1, optimizer, scheduler = load_state_dict(
+            inception_v3_model,
             config.pretrained_model_weights_path,
-            ema_googlenet_model,
+            ema_inception_v3_model,
             start_epoch,
             best_acc1,
             optimizer,
@@ -70,10 +70,10 @@ def main():
 
     print("Check whether the pretrained model is restored...")
     if config.resume:
-        googlenet_model, ema_googlenet_model, start_epoch, best_acc1, optimizer, scheduler = load_state_dict(
-            googlenet_model,
+        inception_v3_model, ema_inception_v3_model, start_epoch, best_acc1, optimizer, scheduler = load_state_dict(
+            inception_v3_model,
             config.pretrained_model_weights_path,
-            ema_googlenet_model,
+            ema_inception_v3_model,
             start_epoch,
             best_acc1,
             optimizer,
@@ -96,8 +96,8 @@ def main():
     scaler = amp.GradScaler()
 
     for epoch in range(start_epoch, config.epochs):
-        train(googlenet_model, ema_googlenet_model, train_prefetcher, pixel_criterion, optimizer, epoch, scaler, writer)
-        acc1 = validate(ema_googlenet_model, valid_prefetcher, epoch, writer, "Valid")
+        train(inception_v3_model, ema_inception_v3_model, train_prefetcher, pixel_criterion, optimizer, epoch, scaler, writer)
+        acc1 = validate(ema_inception_v3_model, valid_prefetcher, epoch, writer, "Valid")
         print("\n")
 
         # Update LR
@@ -109,8 +109,8 @@ def main():
         best_acc1 = max(acc1, best_acc1)
         save_checkpoint({"epoch": epoch + 1,
                          "best_acc1": best_acc1,
-                         "state_dict": googlenet_model.state_dict(),
-                         "ema_state_dict": ema_googlenet_model.state_dict(),
+                         "state_dict": inception_v3_model.state_dict(),
+                         "ema_state_dict": ema_inception_v3_model.state_dict(),
                          "optimizer": optimizer.state_dict(),
                          "scheduler": scheduler.state_dict()},
                         f"epoch_{epoch + 1}.pth.tar",
@@ -149,15 +149,15 @@ def load_dataset() -> [CUDAPrefetcher, CUDAPrefetcher]:
 
 
 def build_model() -> [nn.Module, nn.Module]:
-    googlenet_model = model.__dict__[config.model_arch_name](num_classes=config.model_num_classes,
+    inception_v3_model = model.__dict__[config.model_arch_name](num_classes=config.model_num_classes,
                                                              aux_logits=False,
                                                              transform_input=True)
-    googlenet_model = googlenet_model.to(device=config.device, memory_format=torch.channels_last)
+    inception_v3_model = inception_v3_model.to(device=config.device, memory_format=torch.channels_last)
 
     ema_avg = lambda averaged_model_parameter, model_parameter, num_averaged: (1 - config.model_ema_decay) * averaged_model_parameter + config.model_ema_decay * model_parameter
-    ema_googlenet_model = AveragedModel(googlenet_model, avg_fn=ema_avg)
+    ema_inception_v3_model = AveragedModel(inception_v3_model, avg_fn=ema_avg)
 
-    return googlenet_model, ema_googlenet_model
+    return inception_v3_model, ema_inception_v3_model
 
 
 def define_loss() -> nn.CrossEntropyLoss:

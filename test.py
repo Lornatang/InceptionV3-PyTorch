@@ -53,16 +53,16 @@ def load_dataset() -> CUDAPrefetcher:
 
 def main() -> None:
     # Initialize the model
-    googlenet_model = build_model()
+    inception_v3_model = build_model()
     print(f"Build `{config.model_arch_name}` model successfully.")
 
     # Load model weights
-    googlenet_model, _, _, _, _, _ = load_state_dict(googlenet_model, config.model_weights_path)
+    inception_v3_model, _, _, _, _, _ = load_state_dict(inception_v3_model, config.model_weights_path)
     print(f"Load `{config.model_arch_name}` "
           f"model weights `{os.path.abspath(config.model_weights_path)}` successfully.")
 
     # Start the verification mode of the model.
-    googlenet_model.eval()
+    inception_v3_model.eval()
 
     # Load test dataloader
     test_prefetcher = load_dataset()
@@ -94,7 +94,7 @@ def main() -> None:
             batch_size = images.size(0)
 
             # Inference
-            output = googlenet_model(images)
+            output = inception_v3_model(images)
 
             # measure accuracy and record loss
             top1, top5 = accuracy(output, target, topk=(1, 5))
