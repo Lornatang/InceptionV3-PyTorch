@@ -2,7 +2,8 @@
 
 ## Overview
 
-This repository contains an op-for-op PyTorch reimplementation of [Going Deeper with Convolutions](https://arxiv.org/pdf/1409.4842v1.pdf).
+This repository contains an op-for-op PyTorch reimplementation
+of [Rethinking the Inception Architecture for Computer Vision](https://arxiv.org/pdf/1512.00567v3.pdf).
 
 ## Table of contents
 
@@ -18,7 +19,7 @@ This repository contains an op-for-op PyTorch reimplementation of [Going Deeper 
     - [Result](#result)
     - [Contributing](#contributing)
     - [Credit](#credit)
-        - [Going Deeper with Convolutions](#going-deeper-with-convolutions)
+        - [Rethinking the Inception Architecture for Computer Vision](#rethinking-the-inception-architecture-for-computer-vision)
 
 ## Download weights
 
@@ -40,10 +41,10 @@ Both training and testing only need to modify the `config.py` file.
 
 ### Test
 
-- line 29: `model_arch_name` change to `googlenet`.
+- line 29: `model_arch_name` change to `inception_v3`.
 - line 31: `model_num_classes` change to `1000`.
 - line 33: `mode` change to `test`.
-- line 88: `model_weights_path` change to `./results/pretrained_models/GOOGLENET-ImageNet_1K-64f6524f.pth.tar`.
+- line 88: `model_weights_path` change to `./results/pretrained_models/InceptionV3-ImageNet_1K-b65ce284.pth.tar`.
 
 ```bash
 python3 test.py
@@ -51,10 +52,10 @@ python3 test.py
 
 ### Train model
 
-- line 29: `model_arch_name` change to `googlenet`.
+- line 29: `model_arch_name` change to `inception_v3`.
 - line 31: `model_num_classes` change to `1000`.
 - line 33: `mode` change to `train`.
-- line 47: `pretrained_model_weights_path` change to `./results/pretrained_models/GoogleNet-ImageNet_1K-32d70693.pth.tar`.
+- line 47: `pretrained_model_weights_path` change to `./results/pretrained_models/InceptionV3-ImageNet_1K-b65ce284.pth.tar`.
 
 ```bash
 python3 train.py
@@ -62,10 +63,10 @@ python3 train.py
 
 ### Resume train model
 
-- line 29: `model_arch_name` change to `googlenet`.
+- line 29: `model_arch_name` change to `inception_v3`.
 - line 31: `model_num_classes` change to `1000`.
 - line 33: `mode` change to `train`.
-- line 50: `resume` change to `./samples/GOOGLENET-ImageNet_1K/epoch_xxx.pth.tar`.
+- line 50: `resume` change to `./samples/inception_v3-ImageNet_1K/epoch_xxx.pth.tar`.
 
 ```bash
 python3 train.py
@@ -73,16 +74,16 @@ python3 train.py
 
 ## Result
 
-Source of original paper results: [https://arxiv.org/pdf/1409.4842v1.pdf](https://arxiv.org/pdf/1409.4842v1.pdf))
+Source of original paper results: [https://arxiv.org/pdf/1512.00567v3.pdf](https://arxiv.org/pdf/1512.00567v3.pdf))
 
 In the following table, the top-x error value in `()` indicates the result of the project, and `-` indicates no test.
 
-|   Model   |   Dataset   | Top-1 error (val) | Top-5 error (val) |
-|:---------:|:-----------:|:-----------------:|:-----------------:|
-| GoogleNet | ImageNet_1K |   -(**30.2%**)    | 6.67%(**10.45%**) |
+|    Model     |   Dataset   | Top-1 error (val) | Top-5 error (val) |
+|:------------:|:-----------:|:-----------------:|:-----------------:|
+| inception_v3 | ImageNet_1K | 21.2%(**22.7%**)  |  5.6%(**6.5%**)   |
 
 ```bash
-# Download `GoogleNet-ImageNet_1K-32d70693.pth.tar` weights to `./results/pretrained_models`
+# Download `InceptionV3-ImageNet_1K-32d70693.pth.tar` weights to `./results/pretrained_models`
 # More detail see `README.md<Download weights>`
 python3 ./inference.py 
 ```
@@ -94,13 +95,13 @@ Input:
 Output:
 
 ```text
-Build `googlenet` model successfully.
-Load `googlenet` model weights `/GoogleNet-PyTorch/results/pretrained_models/GoogleNet-ImageNet_1K-32d70693.pth.tar` successfully.
-tench, Tinca tinca                                                          (90.46%)
-armadillo                                                                   (2.23%)
-barracouta, snoek                                                           (0.70%)
-platypus, duckbill, duckbilled platypus, duck-billed platypus, Ornithorhynchus anatinus (0.26%)
-mud turtle                                                                  (0.17%)
+Build `inception_v3` model successfully.
+Load `inception_v3` model weights `/InceptionV3-PyTorch/results/pretrained_models/InceptionV3-ImageNet_1K-32d70693.pth.tar` successfully.
+tench, Tinca tinca                                                          (90.35%)
+barracouta, snoek                                                           (1.21%)
+rock beauty, Holocanthus tricolor                                           (0.06%)
+armadillo                                                                   (0.04%)
+electric ray, crampfish, numbfish, torpedo                                  (0.04%)
 ```
 
 ## Contributing
@@ -112,30 +113,31 @@ I look forward to seeing what the community does with these models!
 
 ### Credit
 
-#### Going Deeper with Convolutions
+#### Rethinking the Inception Architecture for Computer Vision
 
-*Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent
-Vanhoucke, Andrew Rabinovich*
+*Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, Zbigniew Wojna*
 
 ##### Abstract
 
-We propose a deep convolutional neural network architecture codenamed "Inception", which was responsible for setting the
-new state of the art for classification and detection in the ImageNet Large-Scale Visual Recognition Challenge 2014 (
-ILSVRC 2014). The main hallmark of this architecture is the improved utilization of the computing resources inside the
-network. This was achieved by a carefully crafted design that allows for increasing the depth and width of the network
-while keeping the computational budget constant. To optimize quality, the architectural decisions were based on the
-Hebbian principle and the intuition of multiscale processing. One particular incarnation used in our submission for
-ILSVRC 2014 is called GoogLeNet, a 22 layers deep network, the quality of which is assessed in the context of
-classification and detection.
+Convolutional networks are at the core of most state-of-the-art computer vision solutions for a wide variety of tasks.
+Since 2014 very deep convolutional networks started to become mainstream, yielding substantial gains in various
+benchmarks. Although increased model size and computational cost tend to translate to immediate quality gains for most
+tasks (as long as enough labeled data is provided for training), computational efficiency and low parameter count are
+still enabling factors for various use cases such as mobile vision and big-data scenarios. Here we are exploring ways to
+scale up networks in ways that aim at utilizing the added computation as efficiently as possible. We benchmark our
+methods on the ILSVRC 2012 classification challenge validation set and demonstrate substantial gains over the state of
+the art via to carefully factorized convolutions and aggressive regularization: 21.2% top-1 and 5.6% top-5 error for
+single frame evaluation using a network with a computational cost of 5 billion multiply-adds per inference and with
+using less than 25 million parameters.
 
 [[Paper]](https://arxiv.org/pdf/1409.4842v1.pdf)
 
 ```bibtex
-@inproceedings{szegedy2015going,
-  title={Going deeper with convolutions},
-  author={Szegedy, Christian and Liu, Wei and Jia, Yangqing and Sermanet, Pierre and Reed, Scott and Anguelov, Dragomir and Erhan, Dumitru and Vanhoucke, Vincent and Rabinovich, Andrew},
+@inproceedings{szegedy2016rethinking,
+  title={Rethinking the inception architecture for computer vision},
+  author={Szegedy, Christian and Vanhoucke, Vincent and Ioffe, Sergey and Shlens, Jon and Wojna, Zbigniew},
   booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
-  pages={1--9},
-  year={2015}
+  pages={2818--2826},
+  year={2016}
 }
 ```
