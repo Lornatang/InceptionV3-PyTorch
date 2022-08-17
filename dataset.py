@@ -73,7 +73,7 @@ class ImageDataset(Dataset):
         elif self.mode == "Valid" or self.mode == "Test":
             # Use PyTorch's own data enhancement to enlarge and enhance data
             self.pre_transform = transforms.Compose([
-                transforms.Resize(256),
+                transforms.Resize(342),
                 transforms.CenterCrop([self.image_size, self.image_size]),
             ])
         else:
@@ -166,7 +166,8 @@ class CPUPrefetcher:
     """Use the CPU side to accelerate data reading.
 
     Args:
-        dataloader (DataLoader): Data loader. Combines a dataset and a sampler, and provides an iterable over the given dataset.
+        dataloader (DataLoader): Data loader. Combines a dataset and a sampler,
+            and provides an iterable over the given dataset.
     """
 
     def __init__(self, dataloader) -> None:

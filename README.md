@@ -6,7 +6,7 @@ This repository contains an op-for-op PyTorch reimplementation of [Going Deeper 
 
 ## Table of contents
 
-- [GoogleNet-PyTorch](#googlenet-pytorch)
+- [InceptionV3-PyTorch](#inceptionv3-pytorch)
     - [Overview](#overview)
     - [Table of contents](#table-of-contents)
     - [Download weights](#download-weights)

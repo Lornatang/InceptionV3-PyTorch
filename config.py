@@ -26,25 +26,25 @@ device = torch.device("cuda", 0)
 # Turning on when the image size does not change during training can speed up training
 cudnn.benchmark = True
 # Model arch name
-model_arch_name = "googlenet"
+model_arch_name = "inception_v3"
 # Model number class
 model_num_classes = 1000
 # Current configuration parameter method
 mode = "train"
 # Experiment name, easy to save weights and log files
-exp_name = f"{model_arch_name.upper()}-ImageNet_1K"
+exp_name = f"{model_arch_name}-ImageNet_1K"
 
 if mode == "train":
     # Dataset address
     train_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_train"
     valid_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_val"
 
-    image_size = 224
+    image_size = 299
     batch_size = 128
     num_workers = 4
 
     # The address to load the pretrained model
-    pretrained_model_weights_path = "results/pretrained_models/GoogleNet-ImageNet_1K-32d70693.pth.tar"
+    pretrained_model_weights_path = "results/pretrained_models/InceptionV3-ImageNet_1K-b65ce284.pth.tar"
 
     # Incremental training and migration training
     resume = ""
@@ -78,11 +78,11 @@ if mode == "test":
     test_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_val"
 
     # Test dataloader parameters
-    image_size = 224
+    image_size = 299
     batch_size = 256
     num_workers = 4
 
     # How many iterations to print the testing result
     test_print_frequency = 20
 
-    model_weights_path = "results/pretrained_models/GoogleNet-ImageNet_1K-32d70693.pth.tar"
+    model_weights_path = "results/pretrained_models/InceptionV3-ImageNet_1K-b65ce284.pth.tar"
