@@ -44,7 +44,7 @@ Both training and testing only need to modify the `config.py` file.
 - line 29: `model_arch_name` change to `inception_v3`.
 - line 31: `model_num_classes` change to `1000`.
 - line 33: `mode` change to `test`.
-- line 88: `model_weights_path` change to `./results/pretrained_models/InceptionV3-ImageNet_1K-b65ce284.pth.tar`.
+- line 87: `model_weights_path` change to `./results/pretrained_models/InceptionV3-ImageNet_1K-b65ce284.pth.tar`.
 
 ```bash
 python3 test.py
